@@ -4,13 +4,14 @@ Created on Sun Jan 16 13:21:48 2022
 
 @author: Ingo Kodba & Stjepan Rus
 
-tutorials:
+Mora se instalirati eurostat modul s "pip install eurostat". Nakon toga u spyderu (bar meni tako) u konzolu upisati i pokrenuti "import eurostat", i tek onda pokrenuti program. Inače mi izbaci neki eurostat error.
+
+Tutorials:
 https://pypi.org/project/eurostat/
 https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Tutorial:Symbols_and_abbreviations
 
-database:
+Database:
 https://ec.europa.eu/eurostat/data/database
-
 """
 
 import eurostat
@@ -19,6 +20,14 @@ import os
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
+from tkinter_figure import Plotter
+from tkinter_figure import TkinterFigure
+
+from matplotlib.backends.backend_tkagg import (
+    FigureCanvasTkAgg, NavigationToolbar2Tk)
+# Implement the default Matplotlib key bindings.
+from matplotlib.backend_bases import key_press_handler
+from matplotlib.figure import Figure
 
 def is_non_zero_file(fpath):  
     return os.path.isfile(fpath) and os.path.getsize(fpath) > 0
@@ -62,10 +71,8 @@ for godina in godine:
         else:
             drzave[drzava].append({godina:row[godina]})
         #print(row['geo\\time'], godina, row[godina])
-       
-plt.figure()
 
-       
+plotters = []       
 for drzava in drzave:
     print("država", drzava, ":")
     godine2 = []
@@ -75,8 +82,6 @@ for drzava in drzave:
             godine2.append(kljuc)
             podaci.append(godina[kljuc])
             print("\t", kljuc, "-", godina[kljuc])
-    plt.plot(godine2, podaci, 'o-', linewidth=1, markersize=3, label=drzava);  # Plot some data on the axes.
-plt.legend()
-plt.title('NABS01: EUR_HAB')
-plt.show()
+    plotters.append(Plotter(godine2, podaci, drzava))
+TkinterFigure.draw(plotters)
 
