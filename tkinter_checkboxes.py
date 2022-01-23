@@ -29,10 +29,8 @@ class TkinterCheckboxes:
         for label in labels:
             Checkbutton(master, text=label, variable=counter).grid(row=counter, sticky=W)
             counter += 1
-        label = Label(master)
-        label.pack()
         Button(master, text='Quit', command=master.destroy).grid(row=0, column=1, sticky=E, pady=4)
         Button(master, text='Show', command=master.destroy).grid(row=1, column=1, sticky=E, pady=4)
         mainloop()
         
-TkinterCheckboxes.loadCheckboxes(["bmw", "audi", "mercedes", "folksvagen"])
+#TkinterCheckboxes.loadCheckboxes(["bmw", "audi", "mercedes", "folksvagen"])

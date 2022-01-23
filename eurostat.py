@@ -22,6 +22,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from tkinter_figure import Plotter
 from tkinter_figure import TkinterFigure
+from tkinter_checkboxes import TkinterCheckboxes
+from tkinter_radiobuttons import TkinterRadiobuttons
 
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
@@ -47,18 +49,30 @@ else:
         print("Writing data to cache")
         
 razlicite_nabs07 = data.drop_duplicates(subset = ["nabs07"])
+prve_kategorije = []
+for prva_kategorija in razlicite_nabs07['nabs07']:
+    prve_kategorije.append(prva_kategorija)
+    
+    
+def showNextDialog(index, root):
+    print("ovdje ponuditi drugi meni, odnosno nakon obdabira nabs07 kategorije, ponuditi unit kategoriju")
+    print("Ovo je callback, prenesen je indeks " + str(index))
+    root.destroy()
+    
+firstdialog = TkinterRadiobuttons(showNextDialog)
+firstdialog.loadRadiobuttons(prve_kategorije )
 print(razlicite_nabs07['nabs07'])
 
 # provjerava bazu gdje nabs07 == nabs01 i gdje je unit == eur_hab
 # data[(data['nabs07'] == 'NABS01') & (data['unit'] == 'EUR_HAB')]
 
-godine = range(2004,2021)
+range_svih_godina = range(2004,2021)
 drzave = {}
 nabs07_kriterij = 'NABS01'
 unit_kriterij = 'EUR_HAB'
 drzave_kriterij = ['HR', 'SI', 'DE', 'FR', 'UK']
 
-for godina in godine:
+for godina in range_svih_godina:
     for index, row in data.loc[ \
             (data['nabs07'] == nabs07_kriterij) & \
             (data['unit'] == unit_kriterij) & \
@@ -77,11 +91,10 @@ for drzava in drzave:
     print("država", drzava, ":")
     godine2 = []
     podaci = []
-    for godina in drzave[drzava]:
-        for kljuc in godina.keys():
-            godine2.append(kljuc)
-            podaci.append(godina[kljuc])
-            print("\t", kljuc, "-", godina[kljuc])
+    for godine in drzave[drzava]:
+        for godina in godine.keys():
+            godine2.append(godina)
+            podaci.append(godine[godina])
+            print("\t", godina, "-", godine[godina])
     plotters.append(Plotter(godine2, podaci, drzava))
 TkinterFigure.draw(plotters)
-
