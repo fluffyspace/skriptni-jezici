@@ -47,21 +47,32 @@ else:
     with open("data", "wb") as f:
         pickle.dump(data, f)
         print("Writing data to cache")
-        
+    
+selected = []
+    
 razlicite_nabs07 = data.drop_duplicates(subset = ["nabs07"])
 prve_kategorije = []
 for prva_kategorija in razlicite_nabs07['nabs07']:
     prve_kategorije.append(prva_kategorija)
-    
-    
+
 def showNextDialog(index, root):
-    print("ovdje ponuditi drugi meni, odnosno nakon obdabira nabs07 kategorije, ponuditi unit kategoriju")
+    #print("ovdje ponuditi drugi meni, odnosno nakon obdabira nabs07 kategorije, ponuditi unit kategoriju")
     print("Ovo je callback, prenesen je indeks " + str(index))
+    selected.append(int(str(index)))
     root.destroy()
     
 firstdialog = TkinterRadiobuttons(showNextDialog)
 firstdialog.loadRadiobuttons(prve_kategorije )
-print(razlicite_nabs07['nabs07'])
+#print(razlicite_nabs07['nabs07'])
+
+razlicite_unit = data.drop_duplicates(subset = ["unit"])
+druge_kategorije = []
+for druga_kategorija in razlicite_unit['unit']:
+    druge_kategorije.append(druga_kategorija)
+
+seconddialog = TkinterRadiobuttons(showNextDialog)
+seconddialog.loadRadiobuttons(druge_kategorije)
+print(selected)
 
 # provjerava bazu gdje nabs07 == nabs01 i gdje je unit == eur_hab
 # data[(data['nabs07'] == 'NABS01') & (data['unit'] == 'EUR_HAB')]
@@ -74,8 +85,8 @@ drzave_kriterij = ['HR', 'SI', 'DE', 'FR', 'UK']
 
 for godina in range_svih_godina:
     for index, row in data.loc[ \
-            (data['nabs07'] == nabs07_kriterij) & \
-            (data['unit'] == unit_kriterij) & \
+            (data['nabs07'] == prve_kategorije[selected[0]]) & \
+            (data['unit'] == druge_kategorije[selected[1]]) & \
             (data[godina]) & \
             (data['geo\\time'].isin(drzave_kriterij)) \
             ].iterrows():
