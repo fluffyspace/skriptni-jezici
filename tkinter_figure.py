@@ -18,7 +18,7 @@ class Plotter:
 
 class TkinterFigure:
 
-    def draw(plotters):
+    def draw(title, plotters):
         root = tkinter.Tk()
         root.wm_title("Embedding in Tk")
         
@@ -31,7 +31,7 @@ class TkinterFigure:
         for plotter in plotters:
             plt.plot(plotter.x, plotter.y, 'o-', linewidth=1, markersize=3, label=plotter.label);
         plt.legend()
-        plt.title('NABS01: EUR_HAB')
+        plt.title(title)
         plt.show()
 
         
@@ -58,7 +58,7 @@ class TkinterFigure:
                             # Fatal Python Error: PyEval_RestoreThread: NULL tstate
         
         
-        button = tkinter.Button(master=root, text="Quit", command=_quit)
+        button = tkinter.Button(master=root, text="Izađi", command=_quit)
         button.pack(side=tkinter.BOTTOM)
         
         tkinter.mainloop()

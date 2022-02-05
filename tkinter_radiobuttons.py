@@ -9,8 +9,9 @@ from tkinter import *
 
 class TkinterRadiobuttons:
     
-    def __init__(self, callback):
+    def __init__(self, callback, title):
         self.root = Tk()
+        self.root.wm_title(title)
         self.label = Label(self.root)
         self.callback = callback
         self.var = IntVar()
@@ -29,6 +30,7 @@ class TkinterRadiobuttons:
             counter += 1
         
         self.label.pack()
+        self.root.geometry("500x800")
         self.root.mainloop()
         
         
