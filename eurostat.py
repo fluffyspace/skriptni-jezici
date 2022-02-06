@@ -21,6 +21,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import statistics
+from tabulate import tabulate
 from tkinter_figure import Plotter
 from tkinter_figure import TkinterFigure
 from tkinter_checkboxes import TkinterCheckboxes
@@ -168,14 +169,14 @@ def ispis():
     stDev = []
     variance = []
     median = []
-    
     cov = []
     
-    print("Država Mean      St. Devi. Variance  Median")                   
+    selectedCountry = []                  
     
     for drzava in drzave:
         godine2 = []
         podaci = []
+        selectedCountry.append(drzava)
         for godine in drzave[drzava]:
             for godina in godine.keys():
                 godine2.append(godina)
@@ -183,10 +184,10 @@ def ispis():
                 podaci1.append(godine[godina])
         
         if len(podaci) > 2:
-            mean.append(format(statistics.mean(podaci), '.5f'))
-            stDev.append(format(statistics.stdev(podaci), '.5f'))
-            variance.append(format(statistics.variance(podaci), '.5f'))
-            median.append(format(statistics.median(podaci), '.5f'))
+            mean.append(format(statistics.mean(podaci), '.3f'))
+            stDev.append(format(statistics.stdev(podaci), '.3f'))
+            variance.append(format(statistics.variance(podaci), '.3f'))
+            median.append(format(statistics.median(podaci), '.3f'))
         else:
             mean.append(0)
             stDev.append(0)
@@ -195,11 +196,8 @@ def ispis():
         
         if len(drzave) == 2:
             cov.append(podaci)
-            
-    i = 0
-    for drzava in drzave:
-        print(drzava, "   " ,mean[i]," ", stDev[i]," ",variance[i]," ", median[i])
-        i += 1 
+           
+    print(tabulate({"Country": selectedCountry, "Mean": mean, "St. Dev.": stDev, "Variance": variance, "Median": median}, headers="keys"))
     
     if len(drzave) == 2:
         if len(cov[0]) == len(cov[1]):
@@ -207,6 +205,7 @@ def ispis():
             print("\tCovariance: ", (np.cov(cov[0], cov[1]))[0][1])
         else:
             print("Nemoguće usporediti dvije države zbog nejednakog broja podataka.")
+
         
     
 def plotit():
@@ -318,3 +317,4 @@ showFirstDialog()
 
 # provjerava bazu gdje nabs07 == nabs01 i gdje je unit == eur_hab
 # data[(data['nabs07'] == 'NABS01') & (data['unit'] == 'EUR_HAB')]
+
