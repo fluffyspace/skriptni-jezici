@@ -20,12 +20,7 @@ class TkinterFigure:
 
     def draw(title, plotters):
         root = tkinter.Tk()
-        root.wm_title("Embedding in Tk")
-        
-        """fig = Figure(figsize=(5, 4), dpi=100)
-        t = np.arange(0, 3, .01)
-        fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * t))"""
-        
+        root.wm_title("Prikaz grafa")
         
         fig = plt.figure(dpi=100)
         for plotter in plotters:

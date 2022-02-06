@@ -32,15 +32,3 @@ class TkinterRadiobuttons:
         self.label.pack()
         self.root.geometry("750x700")
         self.root.mainloop()
-        
-        
-# donje linije su samo primjer, to inače ide u eurostat.py, printtt je primjer callback funkcije odnosno funkcije koja se pozove kad u objektu TkinterRadiobuttons odaberemo neki radiobutton.
-"""
-def printtt(index, root):
-    print("Ovo je callback, prenesen je indeks " + str(index))
-    root.destroy()
-
-lol = TkinterRadiobuttons(printtt)
-
-lol.loadRadiobuttons(["prva", "druga", "treca", "cetvrta"])
-"""

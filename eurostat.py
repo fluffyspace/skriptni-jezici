@@ -122,8 +122,7 @@ nabs07_renamed = {
     "TOTAL":"Ukupna izdvajanja iz državnog proračuna za istraživanje i razvoj",
     }
 
-units_renamed = {}
-{
+units_renamed = {
     "MIO_NAC": "Nacionalna valuta",
     "MIO_EUR": "Euro",
     "EUR_HAB": "Euro po stanovniku",
@@ -175,7 +174,6 @@ def ispis():
     print("Država Mean      St. Devi. Variance  Median")                   
     
     for drzava in drzave:
-        #print("država", drzava, ":", end=" ")
         godine2 = []
         podaci = []
         for godine in drzave[drzava]:
@@ -204,7 +202,11 @@ def ispis():
         i += 1 
     
     if len(drzave) == 2:
-        print("Covariance: ", (np.cov(cov[0], cov[1]))[0][1])
+        if len(cov[0]) == len(cov[1]):
+            print("Uspoređivanje dvije države:")
+            print("\tCovariance: ", (np.cov(cov[0], cov[1]))[0][1])
+        else:
+            print("Nemoguće usporediti dvije države zbog nejednakog broja podataka.")
         
     
 def plotit():
@@ -238,7 +240,7 @@ def plotit():
                     podaci1.append(godine[godina])
                     #print("\t", godina, "-", godine[godina])
             plotters.append(Plotter(godine2, podaci, drzava))
-        TkinterFigure.draw(prve_kategorije[selected[0]] + " -> " + druge_kategorije[selected[1]], plotters)
+        TkinterFigure.draw(prve_kategorije_renamed[selected[0]] + " -> " + druge_kategorije_renamed[selected[1]], plotters)
 
 
 def callback1(index, root):
