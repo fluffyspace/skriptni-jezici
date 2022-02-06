@@ -30,7 +30,7 @@ class TkinterRadiobuttons:
             counter += 1
         
         self.label.pack()
-        self.root.geometry("500x800")
+        self.root.geometry("750x700")
         self.root.mainloop()
         
         
